@@ -1,3 +1,4 @@
+import LayoutWrapper from "@/components/dashboard/layoutWrapper";
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
 import React from "react";
@@ -11,10 +12,10 @@ const DashboardLayout = (props: Props) => {
   return (
     <div>
       <Sidebar />
-      <div className="ml-64 mt-14 h-full">
+      <LayoutWrapper>
         <Header />
         {children}
-      </div>
+      </LayoutWrapper>
     </div>
   );
 };

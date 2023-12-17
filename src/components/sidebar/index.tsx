@@ -9,9 +9,10 @@ import { cn } from "@/lib/utils";
 import { SlBell } from "react-icons/sl";
 import { GoChecklist } from "react-icons/go";
 import { FiUsers } from "react-icons/fi";
+import { useUiStore } from "@/store/ui";
 
 const Sidebar = () => {
-  const isActive = false;
+  const { isSidebarOpen, toggleSidebar } = useUiStore();
 
   const getActiveLink = (path?: string) => {
     return false;
@@ -40,14 +41,35 @@ const Sidebar = () => {
     },
   ];
 
+  const isSidebarCollapsed = !isSidebarOpen;
+
   return (
-    <div className="bg-white h-full w-64 px-4 py-4 fixed left-0 top-0 bottom-0 border-r border-r-gray-200 flex flex-col">
+    <div
+      className={cn(
+        "bg-white h-full w-64 px-4 py-4 fixed left-0 top-0 bottom-0 border-r border-r-gray-200 flex flex-col",
+        isSidebarCollapsed && "w-16 px-2"
+      )}
+    >
       <div className="flex-1">
-        <div className="flex items-center">
+        <div
+          className={cn(
+            "flex items-center",
+            isSidebarCollapsed && "flex-col justify-center"
+          )}
+        >
           <p className="text-2xl font-semibold flex-1">
-            Task<span className="text-blue-600">View</span>
+            {!isSidebarCollapsed && (
+              <>
+                Task<span className="text-blue-600">View</span>
+              </>
+            )}
+            {isSidebarCollapsed && (
+              <>
+                T<span className="text-blue-600">V</span>
+              </>
+            )}
           </p>
-          <Button size="icon" variant="ghost">
+          <Button size="icon" variant="ghost" onClick={toggleSidebar}>
             <IconContext.Provider
               value={{ className: "text-xl text-gray-500" }}
             >
@@ -55,17 +77,23 @@ const Sidebar = () => {
             </IconContext.Provider>
           </Button>
         </div>
-        <div className="my-5">
+        <div
+          className={cn(
+            "my-5 w-full px-2",
+            isSidebarCollapsed && "tex-center flex items-center justify-center"
+          )}
+        >
           <p className="font-medium text-sm text-gray-500">Menu</p>
         </div>
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-2">
           {links.map((link) => (
             <li key={link.name} className="flex items-center justify-center">
               <Link
                 href={link.path}
                 className={cn(
                   "flex w-full items-center gap-4 py-2 px-2 rounded-sm hover:bg-gray-100",
-                  getActiveLink() && "bg-gray-100"
+                  getActiveLink() && "bg-gray-100",
+                  isSidebarCollapsed && "items-center px-0 justify-center"
                 )}
               >
                 <div>
@@ -80,14 +108,16 @@ const Sidebar = () => {
                     <link.icon />
                   </IconContext.Provider>
                 </div>
-                <p
-                  className={cn(
-                    "text-sm font-medium text-gray-500",
-                    getActiveLink() && "text-gray-800"
-                  )}
-                >
-                  {link.name}
-                </p>
+                {!isSidebarCollapsed && (
+                  <p
+                    className={cn(
+                      "text-sm font-medium text-gray-500",
+                      getActiveLink() && "text-gray-800"
+                    )}
+                  >
+                    {link.name}
+                  </p>
+                )}
               </Link>
             </li>
           ))}
