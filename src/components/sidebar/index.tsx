@@ -10,6 +10,8 @@ import { SlBell } from "react-icons/sl";
 import { GoChecklist } from "react-icons/go";
 import { FiUsers } from "react-icons/fi";
 import { useUiStore } from "@/store/ui";
+import UserLink from "./userLink";
+import { Separator } from "../ui/separator";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUiStore();
@@ -123,7 +125,12 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
-      <div className="sticky bottom-0 left-0 right-0">Sticky</div>
+      <Separator className="my-4" />
+      <div className="sticky bottom-0 left-0 right-0">
+        <div className="">
+          <UserLink isSidebarCollapsed={isSidebarCollapsed} />
+        </div>
+      </div>
     </div>
   );
 };
