@@ -31,7 +31,7 @@ const Tabs = () => {
   }, [tabName, router]);
 
   return (
-    <div className="w-full bg-white border-b border-gray-200 h-10 px-4 sticky top-12">
+    <div className="w-full z-40 bg-white border-b border-gray-200 h-10 px-4 sticky top-14">
       <ul className="flex h-full items-end">
         {tabs.map((tab) => (
           <li

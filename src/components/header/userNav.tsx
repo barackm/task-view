@@ -13,10 +13,24 @@ import {
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useAuth } from "../contexts/authContext";
+import { useSupabase } from "../contexts/supabaseContext";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const UserNav = () => {
   const { user } = useAuth();
   const { user_metadata } = user || {};
+  const { supabase } = useSupabase();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      router.replace("/login");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -58,7 +72,7 @@ const UserNav = () => {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

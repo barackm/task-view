@@ -14,7 +14,7 @@ const Header = () => {
   return (
     <div
       className={cn(
-        "bg-white h-14 right-0 flex items-center fixed left-64 top-0 flex-col border-b border-gray-200",
+        "bg-white h-14 right-0 flex z-50 items-center fixed left-64 top-0 flex-col border-b border-gray-200",
         !isSidebarOpen && "left-16"
       )}
     >

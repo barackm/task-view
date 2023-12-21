@@ -21,7 +21,7 @@ const Workflow = (props: Props) => {
     <Dialog open={showNewTaskModal} onOpenChange={setShowNewTaskModal}>
       <div className="flex flex-col border-gray-200 overflow-hidden h-fit pb-2 bg-white/60 rounded-md ring-1 ring-gray-200 min-w-72 w-72 relative shadow-md">
         <div className="flex items-center px-2 sticky top-0 left-0 right-0 z-10 mb-4 h-12 border-b backdrop-blur-sm">
-          <div className="flex-1 h-full flex gap-2 items-center sticky top-40">
+          <div className="flex-1 h-full flex gap-2 items-center sticky top-24">
             <h3 className="text-sm truncate font-semibold">{workflow.name}</h3>
             <span className="text-muted-foreground">
               {workflow.tasks.length}
