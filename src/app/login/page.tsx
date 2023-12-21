@@ -8,23 +8,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import supabase from "@/lib/supabaseClient";
-import { useAuthStore } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { toast } from "sonner";
-import { BiLoaderAlt } from "react-icons/bi";
-import { useRouter } from "next/navigation";
+import { useSupabase } from "@/components/contexts/supabaseContext";
 
 const Login = () => {
-  const { setCurrentUser } = useAuthStore();
-  const router = useRouter();
+  const { supabase } = useSupabase();
 
   const handleLogin = async (provider: "google" | "github") => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: provider,
-      options: { redirectTo: `${location.origin}/auth/callback` },
+      options: { redirectTo: `${location.origin}/dashboard/tasks` },
     });
 
     if (error) {

@@ -1,12 +1,12 @@
 import React from "react";
 import Tabs from "@/components/tabs";
-import WorkflowsWrapper from "@/components/tasks/woRkflowsWrapper";
+import WorkflowsWrapper from "@/components/tasks/workflowsWrapper";
 
 const Tasks = () => {
   return (
     <div className="w-full">
       <Tabs />
-      <div className="p-4">
+      <div className="">
         <WorkflowsWrapper />
       </div>
     </div>

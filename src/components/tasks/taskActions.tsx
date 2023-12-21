@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { LuMoreHorizontal } from "react-icons/lu";
 import {
   Dialog,
   DialogContent,
@@ -30,9 +30,9 @@ import {
 } from "../ui/alert-dialog";
 import { toast } from "sonner";
 import { IconContext } from "react-icons";
-import { LuMoreHorizontal } from "react-icons/lu";
+import { BsThreeDots } from "react-icons/bs";
 
-const WorkflowActions = () => {
+const TaskActions = () => {
   const [open, setIsOpen] = React.useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
@@ -121,4 +121,4 @@ const WorkflowActions = () => {
   );
 };
 
-export default WorkflowActions;
+export default TaskActions;

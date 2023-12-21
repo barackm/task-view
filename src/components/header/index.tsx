@@ -6,6 +6,7 @@ import TeamSwitcher from "./team-switcher";
 import PageTitle from "./pageTitle";
 import { useUiStore } from "@/store/ui";
 import { cn } from "@/lib/utils";
+import { useAuth } from "../contexts/authContext";
 
 const Header = () => {
   const { isSidebarOpen } = useUiStore();

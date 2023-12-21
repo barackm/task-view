@@ -1,0 +1,307 @@
+[
+  {
+    "workflow": "to_do",
+    "name": "To Do",
+    "tasks": [
+      {
+        "title": "Design Homepage Layout",
+        "user": {
+          "full_name": "John Doe",
+          "profile": "https://example.com/photo/johndoe.jpg"
+        },
+        "description": "Create the initial design for the homepage, focusing on the bakery's branding, featured products, and navigation to other sections.",
+        "comments": [
+          "Need to confirm color scheme",
+          "Client wants a modern look"
+        ],
+        "creation_date": "2023-12-01",
+        "priority": "high",
+        "tags": ["design", "homepage"]
+      },
+      {
+        "title": "Develop Photo Gallery",
+        "user": {
+          "full_name": "Frank Black",
+          "profile": "https://example.com/photo/frankblack.jpg"
+        },
+        "description": "Create an attractive and responsive photo gallery to showcase the bakery's products and events.",
+        "comments": [
+          "Select high-quality images",
+          "Consider lazy loading for performance"
+        ],
+        "creation_date": "2023-12-08",
+        "priority": "medium",
+        "tags": ["gallery", "development"]
+      },
+      {
+        "title": "Research Payment Gateways",
+        "user": {
+          "full_name": "Grace Hall",
+          "profile": "https://example.com/photo/gracehall.jpg"
+        },
+        "description": "Investigate and compare different payment gateways for integrating an online ordering system.",
+        "comments": ["Consider transaction fees", "Ensure security compliance"],
+        "creation_date": "2023-12-09",
+        "priority": "high",
+        "tags": ["research", "payment"]
+      },
+      {
+        "title": "Prepare Legal Pages",
+        "user": {
+          "full_name": "Harry Potter",
+          "profile": "https://example.com/photo/harrypotter.jpg"
+        },
+        "description": "Draft the terms and conditions, privacy policy, and other legal pages required for the website.",
+        "comments": ["Consult with a legal advisor", "Ensure GDPR compliance"],
+        "creation_date": "2023-12-10",
+        "priority": "low",
+        "tags": ["legal", "compliance"]
+      }
+    ]
+  },
+  {
+    "workflow": "in_progress",
+    "name": "In Progress",
+    "tasks": [
+      {
+        "title": "Implement Homepage Features",
+        "user": {
+          "full_name": "Irene Adler",
+          "profile": "https://example.com/photo/ireneadler.jpg"
+        },
+        "description": "Develop the main features for the homepage, including the product carousel, featured items, and special announcements.",
+        "comments": [
+          "Carousel animation needs tweaking",
+          "Check responsiveness on mobile devices"
+        ],
+        "creation_date": "2023-12-11",
+        "priority": "high",
+        "tags": ["development", "homepage"]
+      },
+      {
+        "title": "Revise Legal Documents",
+        "user": {
+          "full_name": "Rachel Green",
+          "profile": "https://example.com/photo/rachelgreen.jpg"
+        },
+        "description": "Review and update the legal documents, ensuring they are comprehensive and comply with the latest regulations.",
+        "comments": [
+          "Terms and conditions need simplifying",
+          "Privacy policy update for new data protection laws"
+        ],
+        "creation_date": "2023-12-20",
+        "priority": "low",
+        "tags": ["revision", "legal"]
+      }
+    ]
+  },
+  {
+    "workflow": "in_review",
+    "name": "In Review",
+    "tasks": [
+      {
+        "title": "Review Homepage Design",
+        "user": {
+          "full_name": "Samuel Vimes",
+          "profile": "https://example.com/photo/samuelvimes.jpg"
+        },
+        "description": "Conduct a detailed review of the homepage design to ensure it aligns with the bakery's brand and user experience standards.",
+        "comments": [
+          "Check consistency with brand guidelines",
+          "Consider adding more call-to-action buttons"
+        ],
+        "creation_date": "2023-12-01",
+        "priority": "high",
+        "tags": ["review", "design"]
+      },
+      {
+        "title": "Content Proofreading for About Us Page",
+        "user": {
+          "full_name": "Tiffany Aching",
+          "profile": "https://example.com/photo/tiffanyaching.jpg"
+        },
+        "description": "Proofread the About Us page content for grammatical errors, readability, and brand alignment.",
+        "comments": [
+          "Look for typos",
+          "Ensure the tone is friendly and welcoming"
+        ],
+        "creation_date": "2023-12-02",
+        "priority": "medium",
+        "tags": ["proofreading", "content"]
+      },
+      {
+        "title": "Evaluate Blog Post Quality",
+        "user": {
+          "full_name": "Ursula Monkton",
+          "profile": "https://example.com/photo/ursulamonkton.jpg"
+        },
+        "description": "Review the first series of blog posts for engaging content, accuracy, and alignment with the marketing strategy.",
+        "comments": [
+          "Check for consistency in writing style",
+          "Ensure posts are SEO optimized"
+        ],
+        "creation_date": "2023-12-03",
+        "priority": "medium",
+        "tags": ["evaluation", "blog"]
+      },
+      {
+        "title": "SEO Strategy Feedback",
+        "user": {
+          "full_name": "Victor Tugelbend",
+          "profile": "https://example.com/photo/victortugelbend.jpg"
+        },
+        "description": "Provide feedback on the implemented SEO strategy, analyzing its effectiveness and identifying areas for improvement.",
+        "comments": ["Review keyword rankings", "Assess page loading speeds"],
+        "creation_date": "2023-12-04",
+        "priority": "high",
+        "tags": ["feedback", "SEO"]
+      },
+      {
+        "title": "Test Menu Interactivity",
+        "user": {
+          "full_name": "William de Worde",
+          "profile": "https://example.com/photo/williamdeworde.jpg"
+        },
+        "description": "Test the interactive elements of the online menu for functionality, user experience, and responsiveness.",
+        "comments": [
+          "Check on various devices and browsers",
+          "Gather user feedback on ease of use"
+        ],
+        "creation_date": "2023-12-05",
+        "priority": "high",
+        "tags": ["testing", "menu"]
+      },
+      {
+        "title": "Analyze Analytics Implementation",
+        "user": {
+          "full_name": "Xenophilius Lovegood",
+          "profile": "https://example.com/photo/xenophiliuslovegood.jpg"
+        },
+        "description": "Review the setup and data from the web analytics tools to ensure accurate tracking and meaningful insights.",
+        "comments": [
+          "Verify tracking codes on all pages",
+          "Check for data discrepancies"
+        ],
+        "creation_date": "2023-12-06",
+        "priority": "medium",
+        "tags": ["analysis", "analytics"]
+      },
+      {
+        "title": "Contact Page Usability Testing",
+        "user": {
+          "full_name": "Ysabell Mort",
+          "profile": "https://example.com/photo/ysabellmort.jpg"
+        },
+        "description": "Perform usability testing on the contact page to assess the user experience, form functionality, and overall design.",
+        "comments": [
+          "Recruit participants for testing",
+          "Prepare a set of tasks and questions"
+        ],
+        "creation_date": "2023-12-07",
+        "priority": "high",
+        "tags": ["usability", "contact"]
+      },
+      {
+        "title": "Gallery Performance Review",
+        "user": {
+          "full_name": "Zaphod Beeblebrox",
+          "profile": "https://example.com/photo/zaphodbeeblebrox.jpg"
+        },
+        "description": "Evaluate the performance and loading times of the photo gallery, ensuring optimal speed and user engagement.",
+        "comments": [
+          "Use performance testing tools",
+          "Consider image compression techniques"
+        ],
+        "creation_date": "2023-12-08",
+        "priority": "medium",
+        "tags": ["performance", "gallery"]
+      },
+      {
+        "title": "Payment Gateway Security Assessment",
+        "user": {
+          "full_name": "Arthur Dent",
+          "profile": "https://example.com/photo/arthurdent.jpg"
+        },
+        "description": "Assess the security measures of the selected payment gateway, ensuring it meets industry standards and protects customer data.",
+        "comments": [
+          "Review encryption methods",
+          "Check compliance with security regulations"
+        ],
+        "creation_date": "2023-12-09",
+        "priority": "high",
+        "tags": ["security", "payment"]
+      },
+      {
+        "title": "Finalize Legal Document Revisions",
+        "user": {
+          "full_name": "Betty Cooper",
+          "profile": "https://example.com/photo/bettycooper.jpg"
+        },
+        "description": "Review the revised legal documents one last time to ensure accuracy and compliance before publishing.",
+        "comments": [
+          "Double-check for recent law changes",
+          "Consult with legal one more time"
+        ],
+        "creation_date": "2023-12-10",
+        "priority": "low",
+        "tags": ["finalization", "legal"]
+      }
+    ]
+  },
+  {
+    "workflow": "in_qa",
+    "name": "In QA",
+    "tasks": []
+  },
+  {
+    "workflow": "done",
+    "name": "Done",
+    "tasks": [
+      {
+        "title": "Launch Bakery Website",
+        "user": {
+          "full_name": "Charlie Brown",
+          "profile": "https://example.com/photo/charliebrown.jpg"
+        },
+        "description": "Successfully launched the new bakery website with full functionality, including the online menu, blog, and contact form.",
+        "comments": [
+          "Website is live",
+          "Initial customer feedback is positive"
+        ],
+        "creation_date": "2023-11-30",
+        "priority": "highest",
+        "tags": ["launch", "website"]
+      },
+      {
+        "title": "Complete First Month SEO Analysis",
+        "user": {
+          "full_name": "Diana Prince",
+          "profile": "https://example.com/photo/dianaprince.jpg"
+        },
+        "description": "Analyzed the website's SEO performance for the first month, tracking keyword rankings, traffic, and user engagement.",
+        "comments": [
+          "Traffic has increased",
+          "Some keywords need re-optimization"
+        ],
+        "creation_date": "2023-12-15",
+        "priority": "high",
+        "tags": ["SEO", "analysis"]
+      },
+      {
+        "title": "Finalize User Feedback Survey",
+        "user": {
+          "full_name": "Edward Nygma",
+          "profile": "https://example.com/photo/edwardnygma.jpg"
+        },
+        "description": "Developed and released a user feedback survey to gather insights on the new website's performance and areas for improvement.",
+        "comments": [
+          "Survey responses are being analyzed",
+          "Positive feedback on the design"
+        ],
+        "creation_date": "2023-12-20",
+        "priority": "medium",
+        "tags": ["feedback", "survey"]
+      }
+    ]
+  }
+]
