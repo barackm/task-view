@@ -6,9 +6,7 @@ const Tasks = () => {
   return (
     <div className="w-full">
       <Tabs />
-      <div className="">
-        <WorkflowsWrapper />
-      </div>
+      <WorkflowsWrapper />
     </div>
   );
 };

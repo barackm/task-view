@@ -12,8 +12,8 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useAuth } from "../contexts/authContext";
-import { useSupabase } from "../contexts/supabaseContext";
+import { useAuth } from "../../contexts/authContext";
+import { useSupabase } from "../../contexts/supabaseContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

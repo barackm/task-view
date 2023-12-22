@@ -90,6 +90,7 @@ export const AuthProvider = ({ children }: Props) => {
   const value = {
     user,
   };
+
   return (
     <AuthContext.Provider value={value}>
       {loading ? <div>Loading...</div> : children}

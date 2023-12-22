@@ -4,8 +4,9 @@ import { Toaster } from "sonner";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { SupabaseProvider } from "@/components/contexts/supabaseContext";
-import { AuthProvider } from "@/components/contexts/authContext";
+import { SupabaseProvider } from "@/contexts/supabaseContext";
+import { AuthProvider } from "@/contexts/authContext";
+import { TeamProvider } from "@/contexts/teamsContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,10 @@ export default function RootLayout({
       <body className={cn(inter.className, "bg-gray-100")}>
         <SupabaseProvider>
           <AuthProvider>
-            <Toaster />
-            {children}
+            <TeamProvider>
+              <Toaster />
+              {children}
+            </TeamProvider>
           </AuthProvider>
         </SupabaseProvider>
       </body>

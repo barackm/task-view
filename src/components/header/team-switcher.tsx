@@ -38,32 +38,10 @@ import {
   CommandSeparator,
 } from "../ui/command";
 
-const groups = [
-  {
-    label: "Personal Account",
-    teams: [
-      {
-        label: "Alicia Koch",
-        value: "personal",
-      },
-    ],
-  },
-  {
-    label: "Teams",
-    teams: [
-      {
-        label: "Acme Inc.",
-        value: "acme-inc",
-      },
-      {
-        label: "Monsters Inc.",
-        value: "monsters",
-      },
-    ],
-  },
-];
-
-type Team = (typeof groups)[number]["teams"][number];
+import { Skeleton } from "../ui/skeleton";
+import { useTeams } from "@/contexts/teamsContext";
+import { useAuth } from "@/contexts/authContext";
+import { useSearch } from "@/hooks/useSearch";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
@@ -74,9 +52,31 @@ interface TeamSwitcherProps extends PopoverTriggerProps {}
 const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>(
-    groups[0].teams[0]
-  );
+  const { user } = useAuth();
+  const { teams, selectedTeam, loadingTeams } = useTeams();
+  const { updateSearch } = useSearch();
+  const otherTeams = teams?.filter((team) => !team.is_personal) || [];
+
+  const groups = [
+    {
+      label: "Personal Account",
+      teams: [
+        {
+          name: user?.user_metadata?.full_name,
+          id: user?.id,
+          photo_url: user?.user_metadata?.picture,
+        },
+      ],
+    },
+    {
+      label: "Teams",
+      teams: otherTeams?.map((team) => ({
+        name: team.name,
+        id: team.id,
+        photo_url: team.photo_url,
+      })),
+    },
+  ];
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
@@ -89,15 +89,29 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
             aria-label="Select a team"
             className={cn("w-[200px] justify-between", className)}
           >
-            <Avatar className="mr-2 h-5 w-5">
-              <AvatarImage
-                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
-                alt={selectedTeam.label}
-              />
-              <AvatarFallback>SC</AvatarFallback>
-            </Avatar>
-            {selectedTeam.label}
-            <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            {loadingTeams ? (
+              <div className="flex items-center space-x-2">
+                <Skeleton className="mr-2 h-5 w-5 rounded-full" />
+                <Skeleton className="h-4 w-[100px]" />
+              </div>
+            ) : (
+              <>
+                <Avatar className="mr-2 h-5 w-5">
+                  <AvatarImage
+                    src={
+                      (selectedTeam?.is_personal
+                        ? user?.user_metadata.picture
+                        : selectedTeam?.photo_url) ||
+                      `https://avatar.vercel.sh/1.png`
+                    }
+                    alt={selectedTeam?.name}
+                  />
+                  <AvatarFallback>SC</AvatarFallback>
+                </Avatar>
+                {selectedTeam?.name}
+                <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+              </>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
@@ -109,26 +123,28 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
                 <CommandGroup key={group.label} heading={group.label}>
                   {group.teams.map((team) => (
                     <CommandItem
-                      key={team.value}
+                      key={team.id}
                       onSelect={() => {
-                        setSelectedTeam(team);
+                        updateSearch({ team: team.id! });
                         setOpen(false);
                       }}
                       className="text-sm"
                     >
                       <Avatar className="mr-2 h-5 w-5">
                         <AvatarImage
-                          src={`https://avatar.vercel.sh/${team.value}.png`}
-                          alt={team.label}
+                          src={
+                            team.photo_url || `https://avatar.vercel.sh/1.png`
+                          }
+                          alt={team.name}
                           className="grayscale"
                         />
                         <AvatarFallback>SC</AvatarFallback>
                       </Avatar>
-                      {team.label}
+                      {team.name}
                       <CheckIcon
                         className={cn(
                           "ml-auto h-4 w-4",
-                          selectedTeam.value === team.value
+                          selectedTeam?.id === team.id
                             ? "opacity-100"
                             : "opacity-0"
                         )}
