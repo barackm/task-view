@@ -2,15 +2,7 @@
 
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -19,15 +11,7 @@ import {
   CheckIcon,
   PlusCircledIcon,
 } from "@radix-ui/react-icons";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+
 import {
   Command,
   CommandEmpty,
@@ -42,6 +26,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useTeams } from "@/contexts/teamsContext";
 import { useAuth } from "@/contexts/authContext";
 import { useSearch } from "@/hooks/useSearch";
+import NewTeamForm from "./newTeamForm";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
@@ -60,6 +45,7 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
   const groups = [
     {
       label: "Personal Account",
+      isPersonal: true,
       teams: [
         {
           name: user?.user_metadata?.full_name,
@@ -125,7 +111,11 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
                     <CommandItem
                       key={team.id}
                       onSelect={() => {
-                        updateSearch({ team: team.id! });
+                        if (group.isPersonal) {
+                          updateSearch({ team: null });
+                        } else {
+                          updateSearch({ team: team.id! });
+                        }
                         setOpen(false);
                       }}
                       className="text-sm"
@@ -173,50 +163,7 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
           </Command>
         </PopoverContent>
       </Popover>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create team</DialogTitle>
-          <DialogDescription>
-            Add a new team to manage products and customers.
-          </DialogDescription>
-        </DialogHeader>
-        <div>
-          <div className="space-y-4 py-2 pb-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Team name</Label>
-              <Input id="name" placeholder="Acme Inc." />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="plan">Subscription plan</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a plan" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="free">
-                    <span className="font-medium">Free</span> -{" "}
-                    <span className="text-muted-foreground">
-                      Trial for two weeks
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="pro">
-                    <span className="font-medium">Pro</span> -{" "}
-                    <span className="text-muted-foreground">
-                      $9/month per user
-                    </span>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setShowNewTeamDialog(false)}>
-            Cancel
-          </Button>
-          <Button type="submit">Continue</Button>
-        </DialogFooter>
-      </DialogContent>
+      <NewTeamForm onClose={() => setShowNewTeamDialog(false)} />
     </Dialog>
   );
 };
