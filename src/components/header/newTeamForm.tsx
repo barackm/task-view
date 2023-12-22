@@ -12,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Label } from "../ui/label";
 import {
   Form,
   FormControl,
@@ -28,7 +27,6 @@ import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { createTeam } from "@/actions/teams";
 import { errorHandler } from "@/lib/errorHandler";
-import { useAuth } from "@/contexts/authContext";
 import { revalidatePath } from "next/cache";
 import { usePathname } from "next/navigation";
 
@@ -38,7 +36,6 @@ type Props = {
 
 const NewTeamForm = (props: Props) => {
   const { onClose } = props;
-  const { user } = useAuth();
   const pathname = usePathname();
   const [loading, setLoading] = React.useState(false);
   const form = useForm<z.infer<typeof teamSchema>>({
@@ -51,11 +48,10 @@ const NewTeamForm = (props: Props) => {
   const onSubmit = async (values: z.infer<typeof teamSchema>) => {
     setLoading(true);
     try {
-      const { data, error } = await createTeam(values, user?.id!);
+      const { data, error } = await createTeam(values);
       if (error) {
         throw error;
       }
-      console.log(data);
       form.reset();
       revalidatePath(pathname);
     } catch (error: any) {

@@ -11,15 +11,11 @@ export const getUserTeams = async () => {
   return data;
 };
 
-export const createTeam = async (
-  team: z.infer<typeof teamSchema>,
-  user_id: string
-) => {
+export const createTeam = async (team: z.infer<typeof teamSchema>) => {
   const supabase = createRouteHandlerClient({ cookies });
   const { data, error } = await supabase.from("teams").insert({
     name: team.name,
     description: team.description,
-    user_id,
   });
   return { data, error };
 };
