@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import moment from "moment";
 import Link from "next/link";
+import DataTablePagination from "../shared/dataTablePagination";
 
 const projects: Project[] = [
   {
@@ -167,8 +168,8 @@ const ProjectsTable = () => {
   });
 
   return (
-    <div>
-      <div className="rounded-md border bg-white">
+    <div className="border bg-white rounded-md overflow-hidden">
+      <div className="">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -218,23 +219,8 @@ const ProjectsTable = () => {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="py-2 border-t">
+        <DataTablePagination table={table} />
       </div>
     </div>
   );
