@@ -45,7 +45,7 @@ export const TeamProvider = ({ children }: Props) => {
     const userTeam = teams?.find((t: Team) => t.is_personal);
 
     if (team) {
-      const selectedTeam = teams?.find((t: Team) => t.id === team);
+      const selectedTeam = teams?.find((t: Team) => t.identifier === team);
       if (selectedTeam) {
         setSelectedTeam(selectedTeam);
       } else {

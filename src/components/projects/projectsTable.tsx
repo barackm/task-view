@@ -16,11 +16,11 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import moment from "moment";
 import Link from "next/link";
 import DataTablePagination from "../shared/dataTablePagination";
+import { getFormattedName } from "@/lib/projects";
 
 const projects: Project[] = [
   {
@@ -122,14 +122,16 @@ const ProjectsTable = () => {
     {
       header: "Name",
       accessorKey: "name",
-      cell: ({ row, cell }) => (
-        <Link
-          href={`/dashboard/projects/${1}`}
-          className="text-blue-600 underline text-xs"
-        >
-          {row.getValue("name")}
-        </Link>
-      ),
+      cell: ({ row }) => {
+        return (
+          <Link
+            href={`/dashboard/projects/${getFormattedName(row.original.name)}`}
+            className="text-blue-600 underline text-xs"
+          >
+            {row.getValue("name")}
+          </Link>
+        );
+      },
     },
     {
       header: "Description",

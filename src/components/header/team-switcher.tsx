@@ -58,7 +58,7 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
       label: "Teams",
       teams: otherTeams?.map((team) => ({
         name: team.name,
-        id: team.id,
+        id: team.identifier,
         photo_url: team.photo_url,
       })),
     },

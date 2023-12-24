@@ -6,4 +6,5 @@ export type Team = {
   user_id: string;
   is_personal: boolean;
   photo_url: string;
+  identifier: string;
 };
