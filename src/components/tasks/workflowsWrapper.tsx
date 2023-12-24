@@ -6,9 +6,9 @@ import { getUserTeams } from "@/actions/teams";
 const WorkflowsWrapper = async () => {
   return (
     <div className="p-4 flex w-full gap-4 overflow-x-auto">
-      {workflows.map((workflow) => (
+      {/* {workflows.map((workflow) => (
         <Workflow key={workflow.name} workflow={workflow} />
-      ))}
+      ))} */}
     </div>
   );
 };

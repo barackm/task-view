@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
+import ProjectSwitcher from "./projectSwitcher";
 
 const Tabs = () => {
   const searchParams = useSearchParams();
@@ -31,8 +32,8 @@ const Tabs = () => {
   }, [tabName, router]);
 
   return (
-    <div className="w-full z-40 bg-white border-b border-gray-200 h-10 px-4 sticky top-14">
-      <ul className="flex h-full items-end">
+    <div className="w-full z-40 bg-white border-b border-gray-200 h-10 px-4 sticky top-14 flex">
+      <ul className="flex h-full items-end flex-1">
         {tabs.map((tab) => (
           <li
             key={tab.name}
@@ -53,6 +54,9 @@ const Tabs = () => {
           </li>
         ))}
       </ul>
+      <div className="flex items-center">
+        <ProjectSwitcher />
+      </div>
     </div>
   );
 };

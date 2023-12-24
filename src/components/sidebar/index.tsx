@@ -12,12 +12,18 @@ import { FiUsers } from "react-icons/fi";
 import { useUiStore } from "@/store/ui";
 import UserLink from "./userLink";
 import { Separator } from "../ui/separator";
+import { GoProjectRoadmap } from "react-icons/go";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUiStore();
+  const pathname = usePathname();
 
-  const getActiveLink = (path?: string) => {
-    return false;
+  const getActiveLink = (path: string) => {
+    if (path === "/dashboard") {
+      return pathname === path;
+    }
+    return pathname.includes(path || "");
   };
 
   const links = [
@@ -30,6 +36,11 @@ const Sidebar = () => {
       name: "Tasks",
       path: "/dashboard/tasks",
       icon: GoChecklist,
+    },
+    {
+      name: "Projects",
+      path: "/dashboard/projects",
+      icon: GoProjectRoadmap,
     },
     {
       name: "Notifications",
@@ -94,7 +105,7 @@ const Sidebar = () => {
                 href={link.path}
                 className={cn(
                   "flex w-full items-center gap-4 py-2 px-2 rounded-sm hover:bg-gray-100",
-                  getActiveLink() && "bg-gray-100",
+                  getActiveLink(link.path) && "bg-gray-100",
                   isSidebarCollapsed && "items-center px-0 justify-center"
                 )}
               >
@@ -103,7 +114,7 @@ const Sidebar = () => {
                     value={{
                       className: cn(
                         "text-xl text-gray-500",
-                        getActiveLink() && "text-gray-800"
+                        getActiveLink(link.path) && "text-gray-800"
                       ),
                     }}
                   >
@@ -114,7 +125,7 @@ const Sidebar = () => {
                   <p
                     className={cn(
                       "text-sm font-medium text-gray-500",
-                      getActiveLink() && "text-gray-800"
+                      getActiveLink(link.path) && "text-gray-800"
                     )}
                   >
                     {link.name}
