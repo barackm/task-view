@@ -69,3 +69,21 @@
 body {
   overscroll-behavior: none;
 }
+
+
+@layer components {
+  .app-text-editor {
+    @apply rounded-md;
+
+  }
+  .app-text-editor .ql-toolbar {
+    @apply border-none rounded-tl-md rounded-tr-md bg-white;
+  }
+
+  .app-text-editor .ql-container {
+    @apply bg-white rounded-b-lg border border-gray-100;
+  }
+  .app-text-editor .ql-editor {
+    @apply min-h-[200px] text-base leading-relaxed;
+  }
+}
