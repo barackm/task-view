@@ -13,12 +13,34 @@ import {
 import { IconContext } from "react-icons";
 import { useParams } from "next/navigation";
 import { useProjectForm } from "./projectForm";
+import { generateDescription } from "@/actions/ai";
+import { errorHandler } from "@/lib/errorHandler";
+import { toast } from "sonner";
+import { LuLoader2 } from "react-icons/lu";
 
 const ProjectDetails = () => {
   const { form } = useProjectForm();
-  const { register, getValues, setValue } = form;
+  const { register, getValues, setValue, watch } = form;
+  const [aiProcessing, setAiProcessing] = React.useState(false);
   const { id } = useParams<{ id: string }>();
   const isNew = id === "new";
+  const projectName = watch("name");
+
+  const generateDescriptionForName = async () => {
+    try {
+      setAiProcessing(true);
+      const res = await generateDescription({
+        type: "project",
+        name: projectName,
+      });
+      setValue("description", res.content);
+      toast.success("Description generated successfully");
+    } catch (error) {
+      errorHandler(error);
+    } finally {
+      setAiProcessing(false);
+    }
+  };
 
   return (
     <div className="w-4/6">
@@ -33,12 +55,21 @@ const ProjectDetails = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button size="icon" variant="secondary">
-                <IconContext.Provider
-                  value={{ className: "text-xl text-primary" }}
-                >
-                  <FaWandMagicSparkles />
-                </IconContext.Provider>
+              <Button
+                size="icon"
+                variant="secondary"
+                onClick={generateDescriptionForName}
+                disabled={aiProcessing}
+              >
+                {aiProcessing ? (
+                  <LuLoader2 className="animate-spin mr-2 text-xl" />
+                ) : (
+                  <IconContext.Provider
+                    value={{ className: "text-xl text-primary" }}
+                  >
+                    <FaWandMagicSparkles />
+                  </IconContext.Provider>
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent>

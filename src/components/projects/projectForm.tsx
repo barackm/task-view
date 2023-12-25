@@ -47,7 +47,6 @@ const ProjectForm = (props: Props) => {
     console.log(data);
   };
 
-  console.log(form.getValues());
   const value = {
     form: form as any,
     onSubmit,
