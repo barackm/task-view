@@ -9,14 +9,17 @@ import { DateRange } from "react-day-picker";
 
 type Props = {
   className?: string;
+  value?: DateRange;
+  onChange?: (date: DateRange) => void;
 };
 
 const DateRangePicker = (props: Props) => {
-  const { className } = props;
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2023, 0, 20),
-    to: addDays(new Date(2023, 0, 20), 20),
-  });
+  const { className, value, onChange } = props;
+
+  const date = value || {
+    from: new Date(),
+    to: addDays(new Date(), 7),
+  };
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -51,7 +54,9 @@ const DateRangePicker = (props: Props) => {
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={(date) => {
+              onChange && onChange(date!);
+            }}
             numberOfMonths={2}
           />
         </PopoverContent>

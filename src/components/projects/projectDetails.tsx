@@ -11,14 +11,21 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { IconContext } from "react-icons";
+import { useParams } from "next/navigation";
+import { useProjectForm } from "./projectForm";
 
 const ProjectDetails = () => {
+  const { form } = useProjectForm();
+  const { register, getValues, setValue } = form;
+  const { id } = useParams<{ id: string }>();
+  const isNew = id === "new";
+
   return (
     <div className="w-4/6">
       <div className="">
         <Input
+          {...register("name")}
           className="text-4xl tracking-tighter py-2 px-0 border-none shadow-none font-semibold outline-none"
-          value="😎This is the project name"
         />
       </div>
       <div className="flex items-center my-4">
@@ -41,8 +48,16 @@ const ProjectDetails = () => {
         </TooltipProvider>
       </div>
       <div>
-        <TextEditor />
+        <TextEditor
+          onChange={(value) => setValue("description", value)}
+          value={getValues("description")}
+        />
       </div>
+      {isNew && (
+        <Button className="mt-4" size="sm" type="submit">
+          Submit
+        </Button>
+      )}
     </div>
   );
 };

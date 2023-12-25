@@ -6,8 +6,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Link from "next/link";
 import { useApi } from "@/hooks/useApi";
 import { getCoverImages } from "@/actions/projects";
+import { useParams } from "next/navigation";
 
 const CoverPictureControls = () => {
+  const { id } = useParams<{ id: string }>();
+  const isNew = id === "new";
+
   const { data } = useApi({
     url: "/profile",
     fetcher: getCoverImages,
@@ -45,11 +49,13 @@ const CoverPictureControls = () => {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="secondary" size="sm" className="h-6 rounded-sm mr-6">
-          Change cover
-        </Button>
-      </PopoverTrigger>
+      {!isNew && (
+        <PopoverTrigger asChild>
+          <Button variant="secondary" size="sm" className="h-6 rounded-sm mr-6">
+            Change cover
+          </Button>
+        </PopoverTrigger>
+      )}
       <PopoverContent className="w-fit mr-10 p-2">
         <Tabs defaultValue="color-gradient" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">

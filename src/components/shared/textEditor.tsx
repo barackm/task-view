@@ -3,15 +3,20 @@ import React, { useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const TextEditor = () => {
-  const [value, setValue] = React.useState("");
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const TextEditor = (props: Props) => {
+  const { value, onChange } = props;
 
   return (
     <div>
       <ReactQuill
         theme="snow"
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         className="app-text-editor"
         modules={{
           toolbar: [

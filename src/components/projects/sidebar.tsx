@@ -9,8 +9,15 @@ import { Button } from "../ui/button";
 import { FaWandMagicSparkles } from "react-icons/fa6";
 import DateRangePicker from "./dateRangePicker";
 import { Progress } from "@/components/ui/progress";
+import { useParams } from "next/navigation";
+import { useProjectForm } from "./projectForm";
 
 const ProjectSidebar = () => {
+  const { form, onSubmit } = useProjectForm();
+  const { register, handleSubmit, setValue, getValues } = form;
+  const { id } = useParams<{ id: string }>();
+  const isNew = id === "new";
+
   const asideItems = [
     {
       label: "Owner",
@@ -31,15 +38,20 @@ const ProjectSidebar = () => {
     {
       label: "Dates",
       icon: <LuCalendarDays />,
-      value: <DateRangePicker />,
+      value: (
+        <DateRangePicker
+          value={getValues("dates")}
+          onChange={(dates) => setValue("dates", dates)}
+        />
+      ),
     },
     {
       label: "Progress",
       icon: <LuActivitySquare />,
       value: (
         <div className="flex w-full items-center gap-2">
-          <Progress value={33} className="flex-1" />
-          <span className="text-xs font-medium">33%</span>
+          <Progress value={isNew ? 0 : 33} className="flex-1" />
+          <span className="text-xs font-medium">{isNew ? "0%" : "33%"}</span>
         </div>
       ),
     },
@@ -62,14 +74,16 @@ const ProjectSidebar = () => {
           </li>
         ))}
       </ul>
-      <div className="my-4">
-        <Button size="sm" className="flex items-center gap-2">
-          <IconContext.Provider value={{ className: "text-xl text" }}>
-            <FaWandMagicSparkles />
-          </IconContext.Provider>
-          Get AI generated tasks
-        </Button>
-      </div>
+      {!isNew && (
+        <div className="my-4">
+          <Button size="sm" className="flex items-center gap-2">
+            <IconContext.Provider value={{ className: "text-xl text" }}>
+              <FaWandMagicSparkles />
+            </IconContext.Provider>
+            Get AI generated tasks
+          </Button>
+        </div>
+      )}
     </aside>
   );
 };
