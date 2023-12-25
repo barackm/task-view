@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   DropdownMenu,
@@ -11,6 +12,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useAuth } from "@/contexts/authContext";
 
 type Props = {
   isSidebarCollapsed: boolean;
@@ -18,6 +20,7 @@ type Props = {
 
 const UserLink = (props: Props) => {
   const { isSidebarCollapsed } = props;
+  const { user } = useAuth();
 
   return (
     <DropdownMenu>
@@ -27,14 +30,18 @@ const UserLink = (props: Props) => {
           className="relative gap-2 flex justify-start px-2 py-4"
         >
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage src={user?.user_metadata?.picture} alt={user?.email} />
+            <AvatarFallback>
+              {user?.user_metadata?.full_name.split(" ").map((name) => name[0])}
+            </AvatarFallback>
           </Avatar>
           {!isSidebarCollapsed && (
-            <div className="flex flex-col text-left">
-              <p className="text-sm font-medium leading-none">shadcn</p>
-              <p className="text-xs leading-none text-muted-foreground">
-                barack@gmail.com
+            <div className="flex flex-1 flex-col text-left w-full gap-1">
+              <p className="text-sm font-medium leading-none">
+                {user?.user_metadata?.full_name}
+              </p>
+              <p className="text-xs block w-full leading-none text-muted-foreground truncate">
+                {user?.email}
               </p>
             </div>
           )}

@@ -9,11 +9,9 @@ import { getCoverImages } from "@/actions/projects";
 
 const CoverPictureControls = () => {
   const { data } = useApi({
-    url: "",
+    url: "/profile",
     fetcher: getCoverImages,
   });
-
-  console.log(data);
 
   const colors = [
     { name: "Red Solid", class: "bg-red-500" },
@@ -48,20 +46,24 @@ const CoverPictureControls = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="secondary" size="sm" className="h-6 rounded-sm">
+        <Button variant="secondary" size="sm" className="h-6 rounded-sm mr-6">
           Change cover
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit mr-4 p-2">
+      <PopoverContent className="w-fit mr-10 p-2">
         <Tabs defaultValue="color-gradient" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="color-gradient">Color & Gradient</TabsTrigger>
-            <TabsTrigger value="upload">Upload Image</TabsTrigger>
+            <TabsTrigger value="color-gradient" className="text-xs">
+              Color & Gradient
+            </TabsTrigger>
+            <TabsTrigger value="upload" className="text-xs">
+              Upload Image
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="color-gradient">
             <Link
               href="https://www.pexels.com/search/gradient/"
-              className="text-xs font-medium mb-2 block hover:underline"
+              className="text-xs font-medium mb-2 inline-block hover:underline"
             >
               Gradients
             </Link>
@@ -75,7 +77,7 @@ const CoverPictureControls = () => {
             </div>
             <Link
               href="https://www.pexels.com/search/gradient/"
-              className="text-xs font-medium my-2 block hover:underline"
+              className="text-xs font-medium my-2 inline-block hover:underline"
             >
               Images
             </Link>
