@@ -45,6 +45,26 @@ export const createProject = async (
   team_id: string
 ) => {
   const supabase = createRouteHandlerClient({ cookies });
+  const { data: projects, error: existError } = await supabase
+    .from("projects")
+    .select("name")
+    .eq("team_id", team_id);
+
+  if (existError) {
+    return { data: null, error: existError };
+  }
+
+  if (
+    projects?.some((p) => p.name.toLowerCase() === project.name.toLowerCase())
+  ) {
+    return {
+      data: null,
+      error: {
+        message: "Project with this name already exists.",
+      },
+    };
+  }
+
   const { data, error } = await supabase
     .from("projects")
     .insert({ ...project, team_id });

@@ -7,13 +7,12 @@ interface Props<T> {
 }
 
 export const useApi = <T>(props: Props<T>) => {
-  const { condition, url, fetcher } = props;
+  const { condition = true, url, fetcher } = props;
   const { data, error } = useSWR<T, any>(
     condition ? url : null,
     fetcher as Fetcher<T>
   );
 
-  const loading = !data && !error;
-
+  const loading = !data && !error && condition;
   return { data, error, loading };
 };
