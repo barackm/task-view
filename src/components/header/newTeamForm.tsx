@@ -27,8 +27,8 @@ import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import { createTeam } from "@/actions/teams";
 import { errorHandler } from "@/lib/errorHandler";
-import { revalidatePath } from "next/cache";
-import { usePathname } from "next/navigation";
+import { useTeams } from "@/contexts/teamsContext";
+import { toast } from "sonner";
 
 type Props = {
   onClose: () => void;
@@ -36,7 +36,7 @@ type Props = {
 
 const NewTeamForm = (props: Props) => {
   const { onClose } = props;
-  const pathname = usePathname();
+  const { mutateTeams } = useTeams();
   const [loading, setLoading] = React.useState(false);
   const form = useForm<z.infer<typeof teamSchema>>({
     resolver: zodResolver(teamSchema),
@@ -48,12 +48,14 @@ const NewTeamForm = (props: Props) => {
   const onSubmit = async (values: z.infer<typeof teamSchema>) => {
     setLoading(true);
     try {
-      const { data, error } = await createTeam(values);
+      const { error } = await createTeam(values);
       if (error) {
         throw error;
       }
       form.reset();
-      revalidatePath(pathname);
+      mutateTeams();
+      toast.success("Team created successfully");
+      onClose();
     } catch (error: any) {
       errorHandler(error);
     } finally {

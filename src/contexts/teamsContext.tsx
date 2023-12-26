@@ -10,6 +10,7 @@ type TeamContextProps = {
   teams: Team[];
   loadingTeams: boolean;
   selectedTeam: Team | null;
+  mutateTeams: () => void;
 };
 
 const TeamContext = createContext<TeamContextProps | null>(null);
@@ -32,7 +33,12 @@ export const TeamProvider = ({ children }: Props) => {
   const router = useRouter();
   const { updateSearch } = useSearch();
 
-  const { data, error, loading } = useApi<any>({
+  const {
+    data,
+    error,
+    loading,
+    mutate: mutateTeams,
+  } = useApi<any>({
     url: "teams",
     fetcher: getUserTeams,
   });
@@ -67,6 +73,7 @@ export const TeamProvider = ({ children }: Props) => {
     teams,
     loadingTeams: loading,
     selectedTeam,
+    mutateTeams,
   };
 
   return <TeamContext.Provider value={value}>{children}</TeamContext.Provider>;
