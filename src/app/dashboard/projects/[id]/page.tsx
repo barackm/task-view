@@ -20,7 +20,7 @@ const EditProject = (props: Props) => {
   const isNew = id === "new";
 
   return (
-    <div className="relative">
+    <div className="relative pb-4">
       <div className="relative">
         <CoverImage />
         <div className="rounded-sm bg-white w-28 h-28 absolute -bottom-12 left-10 overflow-hidden">

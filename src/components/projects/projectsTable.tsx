@@ -21,6 +21,9 @@ import moment from "moment";
 import Link from "next/link";
 import DataTablePagination from "../shared/dataTablePagination";
 import { getFormattedName } from "@/lib/projects";
+import { useApi } from "@/hooks/useApi";
+import { getProjects } from "@/actions/projects";
+import { useTeams } from "@/contexts/teamsContext";
 
 const projects: Project[] = [
   {
@@ -96,6 +99,15 @@ const projects: Project[] = [
 ];
 
 const ProjectsTable = () => {
+  const { selectedTeam } = useTeams();
+  const { data } = useApi({
+    url: "/projects",
+    condition: !!selectedTeam?.id,
+    fetcher: () => getProjects(selectedTeam?.id!),
+  });
+
+  console.log({ selectedTeam });
+
   const columns: ColumnDef<Project>[] = [
     {
       id: "select",

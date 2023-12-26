@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { LuLoader2 } from "react-icons/lu";
 
 const ProjectDetails = () => {
-  const { form } = useProjectForm();
+  const { form, submitting } = useProjectForm();
   const { register, getValues, setValue, watch } = form;
   const [aiProcessing, setAiProcessing] = React.useState(false);
   const { id } = useParams<{ id: string }>();
@@ -86,6 +86,7 @@ const ProjectDetails = () => {
       </div>
       {isNew && (
         <Button className="mt-4" size="sm" type="submit">
+          {submitting && <LuLoader2 className="animate-spin mr-2" />}
           Submit
         </Button>
       )}

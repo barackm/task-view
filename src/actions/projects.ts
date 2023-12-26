@@ -1,6 +1,8 @@
 "use server";
+import { projectSchema } from "@/lib/schemas/project";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import * as z from "zod";
 
 export const getCoverImages = async () => {
   const bucketName = process.env.NEXT_PUBLIC_SUPABASE_COVER_PICS_BUCKET;
@@ -35,5 +37,26 @@ export const getCoverImages = async () => {
   });
 
   const data = [...(imagesWithUrl || []), ...(gradientsWithUrl || [])];
+  return { data, error };
+};
+
+export const createProject = async (
+  project: z.infer<typeof projectSchema>,
+  team_id: string
+) => {
+  const supabase = createRouteHandlerClient({ cookies });
+  const { data, error } = await supabase
+    .from("projects")
+    .insert({ ...project, team_id });
+  console.log(data, error);
+  return { data, error };
+};
+
+export const getProjects = async (team_id: string) => {
+  const supabase = createRouteHandlerClient({ cookies });
+  const { data, error } = await supabase
+    .from("projects")
+    .select()
+    .eq("team_id", team_id);
   return { data, error };
 };
