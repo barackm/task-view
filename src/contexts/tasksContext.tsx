@@ -14,6 +14,7 @@ type TaskContextProps = {
   projects: Project[];
   selectedProject: Project | null;
   tasks: Task[];
+  mutateTasks: () => void;
 };
 
 const TaskContext = createContext<TaskContextProps | null>(null);
@@ -38,7 +39,9 @@ export const TaskProvider = ({ children }: Props) => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("project");
 
-  const { data: tasksData } = useApi<{ data: Task[] | null }>({
+  const { data: tasksData, mutate: mutateTasks } = useApi<{
+    data: Task[] | null;
+  }>({
     url: "/tasks",
     condition: !selectedProject || loadingTeams ? false : true,
     fetcher: () => getTasks(selectedProject?.id!),
@@ -80,6 +83,7 @@ export const TaskProvider = ({ children }: Props) => {
     projects,
     selectedProject,
     tasks,
+    mutateTasks,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

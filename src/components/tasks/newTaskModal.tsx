@@ -33,7 +33,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -59,7 +58,7 @@ const NewTaskModal = (props: Props) => {
   const { onClose, workflow } = props;
   const [aiProcessing, setAiProcessing] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
-  const { selectedProject } = useTasks();
+  const { selectedProject, mutateTasks } = useTasks();
   const { data } = useApi<{ data: Priority[] | null }>({
     url: "/priorities",
     fetcher: getPriorities,
@@ -74,9 +73,7 @@ const NewTaskModal = (props: Props) => {
     },
   });
 
-  const { setValue, watch, getValues, register, formState, handleSubmit } =
-    form;
-  const errors = formState.errors;
+  const { setValue, watch, formState, handleSubmit } = form;
 
   const name = watch("name");
 
@@ -120,12 +117,12 @@ const NewTaskModal = (props: Props) => {
           priority_id: selectedPriorityId as PriorityType,
         },
       });
-      const { data: resData, error } = res;
+      const { error } = res;
       if (error) {
         throw error;
       }
-
-      console.log({ resData });
+      mutateTasks();
+      form.reset();
       toast.success("Task created successfully");
       onClose();
     } catch (error) {
@@ -247,15 +244,17 @@ const NewTaskModal = (props: Props) => {
             </div>
           </div>
           <SheetFooter>
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={onClose} disabled={submitting}>
               Cancel
             </Button>
             <Button
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               disabled={formState.isSubmitting}
+              className="flex items-center gap-2"
             >
-              Continue
+              {submitting && <LuLoader2 className="animate-spin mr-2" />}
+              Submit
             </Button>
           </SheetFooter>
         </SheetContent>
