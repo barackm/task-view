@@ -14,7 +14,7 @@ export interface Project {
   team: Team;
 }
 
-type ProjectOwner = {
+export type ProjectOwner = {
   id: string;
   updated_at: string | null;
   full_name: string;

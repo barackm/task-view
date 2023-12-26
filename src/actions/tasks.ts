@@ -25,3 +25,15 @@ export const createTask = async (args: {
 
   return { data, error };
 };
+
+export const getTasks = async (project_id: string) => {
+  const supabase = createRouteHandlerClient({ cookies });
+  const { data: tasks, error } = await supabase
+    .from("tasks")
+    .select(
+      "*, user:profiles (*), priority:priorities (*), workflow:workflows (*)"
+    )
+    .eq("project_id", project_id);
+
+  return { data: tasks, error };
+};

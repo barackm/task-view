@@ -7,10 +7,13 @@ import { getProjects } from "@/actions/projects";
 import { useSearch } from "@/hooks/useSearch";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
+import { Task } from "@/lib/types/task";
+import { getTasks } from "@/actions/tasks";
 
 type TaskContextProps = {
   projects: Project[];
   selectedProject: Project | null;
+  tasks: Task[];
 };
 
 const TaskContext = createContext<TaskContextProps | null>(null);
@@ -34,6 +37,14 @@ export const TaskProvider = ({ children }: Props) => {
 
   const searchParams = useSearchParams();
   const projectId = searchParams.get("project");
+
+  const { data: tasksData } = useApi<{ data: Task[] | null }>({
+    url: "/tasks",
+    condition: !selectedProject || loadingTeams ? false : true,
+    fetcher: () => getTasks(selectedProject?.id!),
+  });
+
+  const tasks = useMemo(() => tasksData?.data || [], [tasksData]);
 
   const { data, loading } = useApi<{ data: Project[] | null }>({
     url: "/projects",
@@ -68,6 +79,7 @@ export const TaskProvider = ({ children }: Props) => {
   const value = {
     projects,
     selectedProject,
+    tasks,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

@@ -17,6 +17,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import { useTasks } from "@/contexts/tasksContext";
 
 type Props = {
   workflow: Workflow;
@@ -24,7 +25,10 @@ type Props = {
 
 const Workflow = (props: Props) => {
   const { workflow } = props;
+  const { tasks } = useTasks();
   const [showNewTaskModal, setShowNewTaskModal] = React.useState(false);
+
+  const currentTasks = tasks.filter((task) => task.workflow_id === workflow.id);
 
   return (
     <Sheet
@@ -35,7 +39,7 @@ const Workflow = (props: Props) => {
         <div className="flex items-center px-2 sticky top-0 left-0 right-0 z-10 mb-4 h-12 border-b backdrop-blur-sm">
           <div className="flex-1 h-full flex gap-2 items-center sticky top-24">
             <h3 className="text-sm truncate font-semibold">{workflow.name}</h3>
-            <span className="text-muted-foreground">{2}</span>
+            <span className="text-muted-foreground">{currentTasks.length}</span>
           </div>
           <div className="">
             <SheetTrigger asChild>
@@ -49,8 +53,8 @@ const Workflow = (props: Props) => {
           </div>
         </div>
         <ul className="flex flex-col px-3 gap-3 mb-4">
-          {[].map((task: any) => (
-            <li key={task.title}>
+          {currentTasks.map((task) => (
+            <li key={task.id}>
               <Task task={task} />
             </li>
           ))}

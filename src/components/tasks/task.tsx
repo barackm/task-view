@@ -6,9 +6,10 @@ import { IconContext } from "react-icons";
 import { GoComment } from "react-icons/go";
 import moment from "moment";
 import Link from "next/link";
+import { Task } from "@/lib/types/task";
 
 type Props = {
-  task: any;
+  task: Task;
 };
 
 const Task = (props: Props) => {
@@ -32,7 +33,7 @@ const Task = (props: Props) => {
   return (
     <div className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2">
       <div className="flex items-center py-2">
-        <p className="text-md font-medium flex-1 truncate">{task.title}</p>
+        <p className="text-md font-medium flex-1 truncate">{task.name}</p>
         <TaskActions />
       </div>
       <div className="">
@@ -51,7 +52,10 @@ const Task = (props: Props) => {
         <div className="text-sm line-clamp-2 my-2">{task.description}</div>
         <div className="flex justify-between items-center">
           <Avatar className="h-6 w-6">
-            <AvatarImage src={task.user.profile} alt={task.user.full_name} />
+            <AvatarImage
+              src={task.user.avatar_url!}
+              alt={task.user.full_name}
+            />
             <AvatarFallback>
               {task.user.full_name.split(" ").map((name: any) => name[0])}
             </AvatarFallback>
@@ -64,9 +68,7 @@ const Task = (props: Props) => {
               <IconContext.Provider value={{ className: "text-sm" }}>
                 <GoComment />
               </IconContext.Provider>
-              <span className="text-xs text-gray-500">
-                {task.comments.length}
-              </span>
+              <span className="text-xs text-gray-500">{2}</span>
             </Link>
           </div>
         </div>
