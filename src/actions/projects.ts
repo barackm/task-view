@@ -78,7 +78,7 @@ export const getProjects = async (team_id: string) => {
   const supabase = createRouteHandlerClient({ cookies });
   const { data, error } = await supabase
     .from("projects")
-    .select("*")
+    .select("*, team:teams (*), user:profiles (*)")
     .eq("team_id", team_id);
 
   return { data, error };

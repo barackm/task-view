@@ -1,3 +1,5 @@
+import { Team } from "./teams";
+
 export interface Project {
   id: string;
   name: string;
@@ -9,6 +11,7 @@ export interface Project {
     to: string;
   };
   user: ProjectOwner;
+  team: Team;
 }
 
 type ProjectOwner = {
