@@ -27,10 +27,8 @@ export default function RootLayout({
         <SupabaseProvider>
           <AuthProvider>
             <TeamProvider>
-              <TaskProvider>
-                <Toaster />
-                {children}
-              </TaskProvider>
+              <Toaster />
+              {children}
             </TeamProvider>
           </AuthProvider>
         </SupabaseProvider>

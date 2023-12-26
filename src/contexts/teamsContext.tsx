@@ -37,21 +37,23 @@ export const TeamProvider = ({ children }: Props) => {
     fetcher: getUserTeams,
   });
 
-  const { data: teams } = data || {};
+  const { data: teams = [] } = data || {};
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || !teams.length) return;
+
     const userTeam = teams?.find((t: Team) => t.is_personal);
 
     if (team) {
       const selectedTeam = teams?.find((t: Team) => t.identifier === team);
       if (selectedTeam) {
         setSelectedTeam(selectedTeam);
+        updateSearch({ team: selectedTeam.identifier });
       } else {
         if (userTeam) {
           setSelectedTeam(userTeam);
-          updateSearch({ team: userTeam.id });
+          updateSearch({ team: null });
         }
       }
     } else {

@@ -28,7 +28,7 @@ type Props = {
 };
 
 export const TaskProvider = ({ children }: Props) => {
-  const { selectedTeam } = useTeams();
+  const { selectedTeam, loadingTeams } = useTeams();
   const { updateSearch } = useSearch();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -37,7 +37,7 @@ export const TaskProvider = ({ children }: Props) => {
 
   const { data, loading } = useApi<{ data: Project[] | null }>({
     url: "/projects",
-    condition: !!selectedTeam?.id,
+    condition: !selectedTeam || loadingTeams ? false : true,
     fetcher: () => getProjects(selectedTeam?.id!),
   });
 
@@ -45,6 +45,7 @@ export const TaskProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (loading || !selectedTeam) return;
+
     if (projects.length === 0) {
       toast.info("You don't have any projects yet. Create one to get started.");
       return;
