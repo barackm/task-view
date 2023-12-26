@@ -105,11 +105,11 @@ const TeamSwitcher = ({ className }: TeamSwitcherProps) => {
             <CommandList>
               <CommandInput placeholder="Search team..." />
               <CommandEmpty>No team found.</CommandEmpty>
-              {groups.map((group) => (
+              {groups.map((group, index) => (
                 <CommandGroup key={group.label} heading={group.label}>
                   {group.teams.map((team) => (
                     <CommandItem
-                      key={team.id}
+                      key={`${team.id}${index}`}
                       onSelect={() => {
                         if (group.isPersonal) {
                           updateSearch({ team: null });

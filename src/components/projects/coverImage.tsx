@@ -8,9 +8,9 @@ const CoverImage = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-50 z-10" />
       <Image
         src="/assets/img/image-13.jpg"
-        layout="fill"
-        objectFit="cover"
         alt="Project name"
+        fill
+        className="object-cover"
       />
       <div className="z-20">
         <CoverPictureControls />

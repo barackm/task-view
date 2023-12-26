@@ -11,11 +11,14 @@ import DateRangePicker from "./dateRangePicker";
 import { Progress } from "@/components/ui/progress";
 import { useParams } from "next/navigation";
 import { useProjectForm } from "./projectForm";
+import { Skeleton } from "../ui/skeleton";
+import { useAuth } from "@/contexts/authContext";
 
 const ProjectSidebar = () => {
-  const { form, onSubmit } = useProjectForm();
-  const { register, handleSubmit, setValue, getValues } = form;
+  const { form, fetchingProject, project } = useProjectForm();
+  const { setValue, getValues } = form;
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
   const isNew = id === "new";
 
   const asideItems = [
@@ -26,12 +29,18 @@ const ProjectSidebar = () => {
         <>
           <Avatar className="mr-2 w-8 h-8 rounded-full">
             <AvatarImage
-              src={`https://avatar.vercel.sh/1.png`}
+              src={
+                isNew
+                  ? user?.user_metadata?.picture
+                  : project?.user?.avatar_url || ""
+              }
               alt="Project name"
               className="grayscale"
             />
           </Avatar>
-          <span className="text-xs font-medium">Barack Mukelenga</span>
+          <span className="text-xs font-medium">
+            {isNew ? user?.user_metadata?.full_name : project?.user?.full_name}
+          </span>
         </>
       ),
     },
@@ -39,10 +48,16 @@ const ProjectSidebar = () => {
       label: "Dates",
       icon: <LuCalendarDays />,
       value: (
-        <DateRangePicker
-          value={getValues("dates")}
-          onChange={(dates) => setValue("dates", dates)}
-        />
+        <>
+          {fetchingProject ? (
+            <Skeleton className="h-4" />
+          ) : (
+            <DateRangePicker
+              value={getValues("dates")}
+              onChange={(dates) => setValue("dates", dates)}
+            />
+          )}
+        </>
       ),
     },
     {
@@ -50,8 +65,16 @@ const ProjectSidebar = () => {
       icon: <LuActivitySquare />,
       value: (
         <div className="flex w-full items-center gap-2">
-          <Progress value={isNew ? 0 : 33} className="flex-1" />
-          <span className="text-xs font-medium">{isNew ? "0%" : "33%"}</span>
+          {fetchingProject ? (
+            <Skeleton className="h-4 w-full" />
+          ) : (
+            <>
+              <Progress value={isNew ? 0 : 33} className="flex-1" />
+              <span className="text-xs font-medium">
+                {isNew ? "0%" : "33%"}
+              </span>
+            </>
+          )}
         </div>
       ),
     },
@@ -76,7 +99,11 @@ const ProjectSidebar = () => {
       </ul>
       {!isNew && (
         <div className="my-4">
-          <Button size="sm" className="flex items-center gap-2">
+          <Button
+            size="sm"
+            className="flex items-center gap-2"
+            disabled={fetchingProject}
+          >
             <IconContext.Provider value={{ className: "text-xl text" }}>
               <FaWandMagicSparkles />
             </IconContext.Provider>

@@ -17,9 +17,10 @@ import { generateDescription } from "@/actions/ai";
 import { errorHandler } from "@/lib/errorHandler";
 import { toast } from "sonner";
 import { LuLoader2 } from "react-icons/lu";
+import { Skeleton } from "../ui/skeleton";
 
 const ProjectDetails = () => {
-  const { form, submitting } = useProjectForm();
+  const { form, submitting, fetchingProject } = useProjectForm();
   const { register, getValues, setValue, watch } = form;
   const [aiProcessing, setAiProcessing] = React.useState(false);
   const { id } = useParams<{ id: string }>();
@@ -45,10 +46,14 @@ const ProjectDetails = () => {
   return (
     <div className="w-4/6">
       <div className="">
-        <Input
-          {...register("name")}
-          className="text-4xl tracking-tighter py-2 px-0 border-none shadow-none font-semibold outline-none"
-        />
+        {fetchingProject ? (
+          <Skeleton className="h-4" />
+        ) : (
+          <Input
+            {...register("name")}
+            className="text-4xl tracking-tighter py-2 px-0 border-none shadow-none font-semibold outline-none"
+          />
+        )}
       </div>
       <div className="flex items-center my-4">
         <h3 className="text-sm font-medium">Description</h3>
@@ -79,10 +84,14 @@ const ProjectDetails = () => {
         </TooltipProvider>
       </div>
       <div>
-        <TextEditor
-          onChange={(value) => setValue("description", value)}
-          value={getValues("description")}
-        />
+        {fetchingProject ? (
+          <Skeleton className="h-20" />
+        ) : (
+          <TextEditor
+            onChange={(value) => setValue("description", value)}
+            value={getValues("description")}
+          />
+        )}
       </div>
       {isNew && (
         <Button className="mt-4" size="sm" type="submit">

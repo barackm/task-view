@@ -67,16 +67,31 @@ export const createProject = async (
 
   const { data, error } = await supabase
     .from("projects")
-    .insert({ ...project, team_id });
-  console.log(data, error);
-  return { data, error };
+    .insert({ ...project, team_id })
+    .select();
+
+  const createdProject = data?.[0];
+  return { data: createdProject, error };
 };
 
 export const getProjects = async (team_id: string) => {
   const supabase = createRouteHandlerClient({ cookies });
   const { data, error } = await supabase
     .from("projects")
-    .select()
+    .select("*")
     .eq("team_id", team_id);
+
   return { data, error };
+};
+
+export const getProject = async (id: string) => {
+  const supabase = createRouteHandlerClient({ cookies });
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*, team:teams (*), user:profiles (*)")
+    .match({
+      id,
+    });
+
+  return { data: data?.[0], error };
 };

@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+import React, { useEffect, useMemo } from "react";
 import "react-quill/dist/quill.snow.css";
 
 type Props = {
@@ -10,6 +10,10 @@ type Props = {
 
 const TextEditor = (props: Props) => {
   const { value, onChange } = props;
+  const ReactQuill = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
 
   return (
     <div>

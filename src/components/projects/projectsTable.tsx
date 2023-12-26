@@ -64,7 +64,7 @@ const ProjectsTable = () => {
       cell: ({ row }) => {
         return (
           <Link
-            href={`/dashboard/projects/${getFormattedName(row.original.name)}`}
+            href={`/dashboard/projects/${getFormattedName(row.original.id)}`}
             className="text-blue-600 underline text-xs"
           >
             {row.getValue("name")}
@@ -78,6 +78,7 @@ const ProjectsTable = () => {
     },
     {
       header: "Start date",
+      id: "start_date",
       accessorKey: "dates",
       cell: ({ row }) => (
         <span>{moment(row.original.dates?.from).format("ll")}</span>
@@ -85,6 +86,7 @@ const ProjectsTable = () => {
     },
     {
       header: "End Date",
+      id: "end_date",
       accessorKey: "dates",
       cell: ({ row }) => (
         <span>{moment(row.original.dates?.to).format("ll")}</span>
