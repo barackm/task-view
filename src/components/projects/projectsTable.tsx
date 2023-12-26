@@ -27,13 +27,13 @@ import { useTeams } from "@/contexts/teamsContext";
 
 const ProjectsTable = () => {
   const { selectedTeam } = useTeams();
-  const { data } = useApi({
+  const { data } = useApi<{ data: Project[] | null }>({
     url: "/projects",
     condition: !!selectedTeam?.id,
     fetcher: () => getProjects(selectedTeam?.id!),
   });
 
-  const projects: Project[] = data?.data || [];
+  const projects = data?.data || [];
 
   const columns: ColumnDef<Project>[] = [
     {

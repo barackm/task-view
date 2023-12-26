@@ -8,6 +8,7 @@ import ProjectSwitcher from "./projectSwitcher";
 const Tabs = () => {
   const searchParams = useSearchParams();
   const tabName = searchParams.get("tab")?.toString();
+
   const router = useRouter();
 
   const tabs = [

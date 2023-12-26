@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
@@ -13,53 +14,45 @@ import {
 } from "../ui/command";
 import Link from "next/link";
 import { Route } from "@/lib/routes";
+import { useSearch } from "@/hooks/useSearch";
+import { useTasks } from "@/contexts/tasksContext";
 
 const ProjectSwitcher = () => {
+  const { updateSearch } = useSearch();
+  const { projects, selectedProject } = useTasks();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="ml-auto">
-          Select a Project
+          {selectedProject?.name || "Select project"}
           <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0" align="end">
         <Command>
-          <CommandInput placeholder="Select new role..." />
+          <CommandInput placeholder="Select project..." />
           <CommandList>
-            <CommandEmpty>No roles found.</CommandEmpty>
+            <CommandEmpty>No projects found.</CommandEmpty>
             <CommandGroup>
-              <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                <p>Viewer</p>
-                <p className="text-sm text-muted-foreground">
-                  Can view and comment.
-                </p>
-              </CommandItem>
-              <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                <p>Developer</p>
-                <p className="text-sm text-muted-foreground">
-                  Can view, comment and edit.
-                </p>
-              </CommandItem>
-              <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                <p>Billing</p>
-                <p className="text-sm text-muted-foreground">
-                  Can view, comment and manage billing.
-                </p>
-              </CommandItem>
-              <CommandItem className="teamaspace-y-1 flex flex-col items-start px-4 py-2">
-                <p>Owner</p>
-                <p className="text-sm text-muted-foreground">
-                  Admin-level access to all resources.
-                </p>
-              </CommandItem>
+              {projects.map((project) => (
+                <CommandItem
+                  key={project.id}
+                  onSelect={() => {
+                    updateSearch({ project: project.id! });
+                  }}
+                  className="teamaspace-y-1 flex flex-col items-start px-4 py-2"
+                >
+                  <p>{project.name}</p>
+                </CommandItem>
+              ))}
             </CommandGroup>
           </CommandList>
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
               <Link href={Route.newProject}>
-                <CommandItem onSelect={() => {}}>
+                <CommandItem>
                   <PlusCircledIcon className="mr-2 h-5 w-5" />
                   Create a new project
                 </CommandItem>

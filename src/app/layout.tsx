@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { SupabaseProvider } from "@/contexts/supabaseContext";
 import { AuthProvider } from "@/contexts/authContext";
 import { TeamProvider } from "@/contexts/teamsContext";
+import { TaskProvider } from "@/contexts/tasksContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,10 @@ export default function RootLayout({
         <SupabaseProvider>
           <AuthProvider>
             <TeamProvider>
-              <Toaster />
-              {children}
+              <TaskProvider>
+                <Toaster />
+                {children}
+              </TaskProvider>
             </TeamProvider>
           </AuthProvider>
         </SupabaseProvider>
