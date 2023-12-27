@@ -46,3 +46,42 @@ export const generateDescription = async (args: GenerateDescAction) => {
 
   return JSON.parse(content || "") as { content: string };
 };
+
+const taskFormat = [
+  {
+    name: "string",
+    description: "string in html",
+    priority: "Low | Medium | High | Highest",
+  },
+];
+
+type GenerateTasksAction = {
+  projectName?: string;
+  projectDescription?: string;
+};
+
+export const generateTasks = async (args: GenerateTasksAction) => {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-1106",
+    messages: [
+      {
+        role: "system",
+        content: `You help genarate tasks for projects on a Task management app that returns json in the format ${taskFormat}, remember that the description should be in html format and priority is an enum ("Low" | "Medium" | "High" | "Highest") and name is string representing the title of the task. Ensure that you return a valid JSON. Everything is based on the project name and description you can generate as many tasks as necessary`,
+      },
+      {
+        role: "user",
+        content: `I need a tasks for a project called ${args.projectName}. It is ${args.projectDescription}`,
+      },
+    ],
+    max_tokens: 500,
+    response_format: {
+      type: "json_object",
+    },
+  });
+
+  const { choices } = completion;
+  const { message } = choices[0];
+  const { content } = message;
+
+  return JSON.parse(content || "") as { content: any; tasks: any[] };
+};

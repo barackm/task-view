@@ -9,6 +9,7 @@ type ProjectMetaData = {
   team_id: string;
   project_id: string;
   workflow_id: string;
+  priority_id?: string;
 };
 
 export const createTask = async (args: {
@@ -36,4 +37,19 @@ export const getTasks = async (project_id: string) => {
     .eq("project_id", project_id);
 
   return { data: tasks, error };
+};
+
+export const createMassTasks = async (args: {
+  tasks: z.infer<typeof taskSchema>[];
+  projectMataData: ProjectMetaData;
+}) => {
+  const { tasks, projectMataData } = args;
+  const supabase = createRouteHandlerClient({ cookies });
+
+  const { data, error } = await supabase
+    .from("tasks")
+    .insert(tasks.map((task) => ({ ...task, ...projectMataData })))
+    .select("*");
+
+  return { data, error };
 };

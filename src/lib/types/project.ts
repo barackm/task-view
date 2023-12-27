@@ -6,6 +6,7 @@ export interface Project {
   description?: string;
   updated_at?: string | null;
   created_at: string;
+  team_id: string;
   dates?: {
     from: string;
     to: string;
