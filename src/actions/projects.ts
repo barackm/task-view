@@ -76,10 +76,15 @@ export const createProject = async (
 
 export const getProjects = async (team_id: string) => {
   const supabase = createRouteHandlerClient({ cookies });
+  const userData = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("projects")
     .select("*, team:teams (*), user:profiles (*)")
-    .eq("team_id", team_id);
+    .match({
+      team_id,
+      user_id: userData?.data.user?.id,
+    });
 
   return { data, error };
 };

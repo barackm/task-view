@@ -34,7 +34,9 @@ export const getTasks = async (project_id: string) => {
     .select(
       "*, user:profiles (*), priority:priorities (*), workflow:workflows (*)"
     )
-    .eq("project_id", project_id);
+    .match({
+      project_id,
+    });
 
   return { data: tasks, error };
 };
