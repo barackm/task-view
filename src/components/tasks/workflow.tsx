@@ -6,17 +6,9 @@ import { IconContext } from "react-icons";
 import { BsPlusCircleDotted } from "react-icons/bs";
 import WorkflowActions from "./workflowActions";
 import Task from "./task";
-import { Dialog, DialogTrigger } from "../ui/dialog";
 import NewTaskModal from "./newTaskModal";
 import { Workflow } from "@/lib/types/workflow";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
+import { Sheet, SheetTrigger } from "../ui/sheet";
 import { useTasks } from "@/contexts/tasksContext";
 
 type Props = {
@@ -28,7 +20,7 @@ const Workflow = (props: Props) => {
   const { tasks } = useTasks();
   const [showNewTaskModal, setShowNewTaskModal] = React.useState(false);
 
-  const currentTasks = tasks.filter((task) => task.workflow_id === workflow.id);
+  const currentTasks = tasks[workflow.id] || [];
 
   return (
     <Sheet

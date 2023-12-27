@@ -33,7 +33,9 @@ const Task = (props: Props) => {
   return (
     <div className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2">
       <div className="flex items-center py-2">
-        <p className="text-md font-medium flex-1 truncate">{task.name}</p>
+        <p className="text-md cursor-grab flex-1 font-medium w-full truncate">
+          {task.name}
+        </p>
         <TaskActions />
       </div>
       <div className="">
