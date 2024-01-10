@@ -47,7 +47,7 @@ export const TeamProvider = ({ children }: Props) => {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   useEffect(() => {
-    if (loading || !teams.length) return;
+    if (loading || !teams?.length) return;
 
     const userTeam = teams?.find((t: Team) => t.is_personal);
 

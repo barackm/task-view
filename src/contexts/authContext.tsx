@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSupabase } from "./supabaseContext";
+import { useRouter } from "next/navigation";
+import { errorHandler } from "@/lib/errorHandler";
 
 export interface User {
   id: string;
@@ -63,12 +65,15 @@ export const AuthProvider = ({ children }: Props) => {
   const { supabase } = useSupabase();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session) {
           getCurrentUser(session);
+        } else {
+          router.push("/login");
         }
       }
     );
@@ -83,8 +88,13 @@ export const AuthProvider = ({ children }: Props) => {
       const currentUser = await session.user;
       if (currentUser) {
         setUser(currentUser);
+      } else {
+        router.push("/login");
       }
-    } catch (error) {}
+    } catch (error) {
+      errorHandler(error);
+      router.push("/login");
+    }
   };
 
   const value = {

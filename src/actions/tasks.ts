@@ -29,6 +29,9 @@ export const createTask = async (args: {
 
 export const getTasks = async (project_id: string) => {
   const supabase = createRouteHandlerClient({ cookies });
+  const userData = await supabase.auth.getUser();
+  const user = userData?.data.user;
+
   const { data: tasks, error } = await supabase
     .from("tasks")
     .select(
@@ -36,6 +39,7 @@ export const getTasks = async (project_id: string) => {
     )
     .match({
       project_id,
+      user_id: user?.id, // For now we only allow the user to see their own tasks, we do not support team tasks yet.
     });
 
   return { data: tasks, error };
