@@ -7,6 +7,8 @@ import { GoComment } from "react-icons/go";
 import moment from "moment";
 import Link from "next/link";
 import { Task } from "@/lib/types/task";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
 type Props = {
   task: Task;
@@ -14,6 +16,9 @@ type Props = {
 
 const Task = (props: Props) => {
   const { task } = props;
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task.id,
+  });
 
   const badges = [
     {
@@ -30,10 +35,22 @@ const Task = (props: Props) => {
     },
   ];
 
+  const styles = {
+    transform: CSS.Transform.toString(transform),
+  };
+
   return (
-    <div className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2">
+    <div
+      className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2"
+      ref={setNodeRef}
+      {...attributes}
+      style={styles}
+    >
       <div className="flex items-center py-2">
-        <p className="text-md cursor-grab flex-1 font-medium w-full truncate">
+        <p
+          className="text-md cursor-grab flex-1 font-medium w-full truncate"
+          {...listeners}
+        >
           {task.name}
         </p>
         <TaskActions />
