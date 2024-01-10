@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Task } from "@/lib/types/task";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import ReactHtmlParser from "react-html-parser";
 
 type Props = {
   task: Task;
@@ -41,7 +42,7 @@ const Task = (props: Props) => {
 
   return (
     <div
-      className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2"
+      className="px-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 pb-2 w-full"
       ref={setNodeRef}
       {...attributes}
       style={styles}
