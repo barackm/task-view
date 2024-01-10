@@ -75,6 +75,18 @@ const ProjectsTable = () => {
     {
       header: "Description",
       accessorKey: "description",
+      cell: ({ row }) => {
+        const description: any = row.getValue("description");
+        const parser = new DOMParser();
+        const rawDescription = parser.parseFromString(
+          description || "",
+          "text/html"
+        ).body.textContent;
+
+        return (
+          <div className="line-clamp-2 text-xs w-60">{rawDescription}</div>
+        );
+      },
     },
     {
       header: "Start date",
