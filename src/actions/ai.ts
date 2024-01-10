@@ -85,3 +85,52 @@ export const generateTasks = async (args: GenerateTasksAction) => {
 
   return JSON.parse(content || "") as { content: any; tasks: any[] };
 };
+
+type TaskNames = {
+  taskNames?: string[];
+  projectDescription?: string;
+};
+
+export const getTasksOverview = async (args: TaskNames) => {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo-1106",
+    messages: [
+      {
+        role: "system",
+        content: `You help genarate a cool overview of the tasks the user is currently working on, with some emojis and stuff to make it look cool, with some tips on how to be more productive and stay focused and motivated. You can use the task names and project description to make it look cool. Ensure that you return a valid JSON with format 
+        {
+          "overview": "",
+          "tips": {
+              "productivity": "",
+              "focus": "",
+              "motivation": ""
+          }
+        }`,
+      },
+      {
+        role: "user",
+        content: `I need a overview of the tasks I am currently working on like a story. I am working on ${args.taskNames?.join(
+          ", "
+        )} and the whole project description is ${
+          args.projectDescription
+        }. Just return everything as a string in html format like a story you're telling me.`,
+      },
+    ],
+    max_tokens: 500,
+    response_format: {
+      type: "json_object",
+    },
+  });
+
+  const { choices } = completion;
+  const { message } = choices[0];
+  const { content } = message;
+  return JSON.parse(content || "") as {
+    overview: string;
+    tips: {
+      productivity: string;
+      focus: string;
+      motivation: string;
+    };
+  };
+};

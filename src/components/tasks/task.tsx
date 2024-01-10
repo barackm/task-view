@@ -9,7 +9,6 @@ import Link from "next/link";
 import { Task } from "@/lib/types/task";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import ReactHtmlParser from "react-html-parser";
 
 type Props = {
   task: Task;
