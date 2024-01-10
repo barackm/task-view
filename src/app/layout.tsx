@@ -27,7 +27,7 @@ export default function RootLayout({
         <SupabaseProvider>
           <AuthProvider>
             <TeamProvider>
-              <Toaster />
+              <Toaster duration={5000} />
               {children}
             </TeamProvider>
           </AuthProvider>

@@ -13,6 +13,7 @@ import _ from "lodash";
 
 type TaskContextProps = {
   projects: Project[];
+  loadingProjects: boolean;
   selectedProject: Project | null;
   tasks: { [key: string]: Task[] };
   mutateTasks: () => void;
@@ -62,6 +63,7 @@ export const TaskProvider = ({ children }: Props) => {
   });
 
   const projects = useMemo(() => data?.data || [], [data]);
+  const loadingProjects = useMemo(() => loading, [loading]);
 
   const handleRepositionTask = (args: {
     taskId: number;
@@ -113,6 +115,7 @@ export const TaskProvider = ({ children }: Props) => {
     tasks,
     mutateTasks,
     handleRepositionTask,
+    loadingProjects,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
