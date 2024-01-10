@@ -8,6 +8,7 @@ import ProjectSidebar from "@/components/projects/sidebar";
 import ProjectForm from "@/components/projects/projectForm";
 import Image from "next/image";
 import CoverImage from "@/components/projects/coverImage";
+import TasksList from "@/components/projects/tasksList";
 
 type Props = {
   params: {
@@ -44,7 +45,7 @@ const EditProject = (props: Props) => {
           <h3 className="my-4">
             Tasks <span className="text-xs text-gray-500">(12)</span>
           </h3>
-          <ProjectsTable />
+          <TasksList />
         </div>
       )}
     </div>
