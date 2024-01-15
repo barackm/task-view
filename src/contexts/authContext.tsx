@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSupabase } from "./supabaseContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { errorHandler } from "@/lib/errorHandler";
 
 export interface User {
@@ -65,6 +65,8 @@ export const AuthProvider = ({ children }: Props) => {
   const { supabase } = useSupabase();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const pathname = usePathname();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -88,6 +90,9 @@ export const AuthProvider = ({ children }: Props) => {
       const currentUser = await session.user;
       if (currentUser) {
         setUser(currentUser);
+        if (pathname == "/") {
+          router.push("/dashboard");
+        }
       } else {
         router.push("/login");
       }

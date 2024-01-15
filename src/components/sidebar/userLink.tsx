@@ -36,7 +36,7 @@ const UserLink = (props: Props) => {
             </AvatarFallback>
           </Avatar>
           {!isSidebarCollapsed && (
-            <div className="flex flex-1 flex-col text-left w-full gap-1">
+            <div className="flex flex-1 flex-col text-left w-full gap-1 min-w-0">
               <p className="text-sm font-medium leading-none">
                 {user?.user_metadata?.full_name}
               </p>
