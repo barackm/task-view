@@ -13,13 +13,23 @@ type GenerateDescAction = {
   projectDescription?: string;
 };
 
-export const generateDescription = async (args: GenerateDescAction) => {
+interface Params {
+  maxTokens?: number;
+  frequencyPenalty?: number;
+  temperature?: number;
+}
+
+export const generateDescription = async (
+  args: GenerateDescAction,
+  params: Params = { maxTokens: 100, frequencyPenalty: 0.5, temperature: 0.5 }
+) => {
+  const { maxTokens, frequencyPenalty, temperature } = params;
   const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo-1106",
     messages: [
       {
         role: "system",
-        content: `You help genarate descriptions for projects and tasks on a Task management app and return only the HTML in a json { content: "<p>html content</p>" } just like a rich text editor content, remeber that you can use any html elements to format the content the way it should make it look well formated. for tasks, you need to define a well detailed steps to complete the task and add bullet points to define professional user stories. For projects be as descriptive as possible. Ensure that you return a valid JSON`,
+        content: `You help generate descriptions for projects and tasks on a Task management app and return only the HTML in a json { content: "<p>html content</p>" } just like a rich text editor content, remember that you can use any html elements to format the content the way it should make it look well formatted. for tasks, you need to define a well detailed steps to complete the task and add bullet points to define professional user stories. For projects be as descriptive as possible. Ensure that you return a valid JSON`,
       },
       {
         role: "user",
@@ -34,7 +44,9 @@ export const generateDescription = async (args: GenerateDescAction) => {
         }`,
       },
     ],
-    max_tokens: 300,
+    max_tokens: maxTokens,
+    temperature: temperature,
+    frequency_penalty: frequencyPenalty,
     response_format: {
       type: "json_object",
     },
@@ -46,7 +58,6 @@ export const generateDescription = async (args: GenerateDescAction) => {
 
   return JSON.parse(content || "") as { content: string };
 };
-
 const taskFormat = [
   {
     name: "string",
